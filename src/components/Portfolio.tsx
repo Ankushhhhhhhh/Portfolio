@@ -21,7 +21,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? "bg-bg/90 backdrop-blur-md border-b border-border py-4" : "bg-transparent py-6"}`}>
+    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 hidden md:block ${scrolled ? "bg-bg/90 backdrop-blur-md border-b border-border py-4" : "bg-transparent py-6"}`}>
       <div className="container-max flex justify-between items-center">
         <a href="#home" className="text-xl font-bold tracking-tighter text-primary">Ankush Shetty</a>
         
