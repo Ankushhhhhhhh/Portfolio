@@ -32,4 +32,26 @@
   .container-max {
     @apply max-w-6xl mx-auto;
   }
+
+  .gradient-bg {
+    background: linear-gradient(to right, #5227FF, #FF9FFC, #B19EEF);
+    background-size: 200% auto;
+    animation: gradient-move 8s linear infinite;
+  }
+
+  .gradient-icon {
+    @apply relative inline-flex items-center justify-center;
+    background: linear-gradient(to right, #5227FF, #FF9FFC, #B19EEF);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    background-size: 200% auto;
+    animation: gradient-move 8s linear infinite;
+  }
+
+  @keyframes gradient-move {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
 }

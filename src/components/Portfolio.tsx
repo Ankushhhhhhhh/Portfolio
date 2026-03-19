@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { useState, useEffect, useCallback, useRef, FormEvent } from "react";
 import Aurora from "./Aurora";
+import GradientText from "./GradientText";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -37,21 +38,29 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 hidden md:block ${scrolled ? "bg-bg/90 backdrop-blur-md border-b border-border py-4" : "bg-transparent py-6"}`}>
-      <div className="container-max flex justify-between items-center">
-        <a href="#home" className="text-xl font-bold tracking-tighter text-primary">Ankush Shetty</a>
+    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? "bg-bg/90 backdrop-blur-md border-b-2 border-transparent py-4" : "bg-transparent py-6"}`} style={scrolled ? { borderImage: 'linear-gradient(to right, #5227FF, #FF9FFC, #B19EEF) 1' } : {}}>
+      <div className="container-max flex justify-between items-center px-6">
+        <a href="#home" className="text-xl font-bold tracking-tighter">
+          <GradientText
+            colors={["#5227FF", "#FF9FFC", "#B19EEF"]}
+            animationSpeed={8}
+            showBorder={false}
+          >
+            Ankush Shetty
+          </GradientText>
+        </a>
         
         {/* Desktop Links */}
         <div className="hidden md:flex gap-8">
           {navLinks.map((link) => (
-            <a key={link.name} href={link.href} className="text-sm font-medium text-text-muted hover:text-primary transition-colors">
+            <a key={link.name} href={link.href} className="text-sm font-medium text-text-muted hover:gradient-icon transition-all">
               {link.name}
             </a>
           ))}
         </div>
 
         {/* Mobile Menu Toggle */}
-        <button className="md:hidden text-text" onClick={() => setIsOpen(!isOpen)}>
+        <button className="md:hidden gradient-icon" onClick={() => setIsOpen(!isOpen)}>
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
@@ -68,7 +77,7 @@ const Navbar = () => {
               key={link.name} 
               href={link.href} 
               onClick={() => setIsOpen(false)}
-              className="text-lg font-medium text-text hover:text-primary transition-colors"
+              className="text-lg font-medium text-text hover:gradient-icon transition-all"
             >
               {link.name}
             </a>
@@ -83,7 +92,7 @@ const Hero = () => (
   <section id="home" className="min-h-screen relative flex flex-col justify-center items-center text-center px-6 pt-20 bg-gradient-to-b from-bg to-bg-alt overflow-hidden">
     {/* Aurora Background */}
     <Aurora
-      colorStops={["#7cff67", "#B19EEF", "#5227FF"]}
+      colorStops={["#5227FF", "#FF9FFC", "#B19EEF"]}
       blend={0.5}
       amplitude={1.0}
       speed={1}
@@ -96,7 +105,13 @@ const Hero = () => (
       className="container-max relative z-10"
     >
       <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-6 leading-tight">
-        Building <span className="text-primary">Modern</span> Digital Experiences
+        Building <GradientText
+          colors={["#5227FF", "#FF9FFC", "#B19EEF"]}
+          animationSpeed={8}
+          showBorder={false}
+        >
+          Modern
+        </GradientText> Digital Experiences
       </h1>
       <p className="text-lg md:text-xl text-text-muted mb-10 max-w-2xl mx-auto font-medium">
         Hi, I'm Ankush. An aspiring web developer focused on creating clean, 
@@ -105,13 +120,13 @@ const Hero = () => (
       <div className="flex flex-col sm:flex-row gap-4 justify-center">
         <a 
           href="#projects" 
-          className="inline-flex items-center justify-center bg-primary text-white px-8 py-4 rounded-xl font-semibold hover:bg-primary-hover transition-all transform hover:-translate-y-1 shadow-lg shadow-primary/20"
+          className="inline-flex items-center justify-center bg-white text-black px-8 py-4 rounded-xl font-semibold transition-all transform hover:-translate-y-1 shadow-lg shadow-white/10"
         >
           View Projects
         </a>
         <a 
           href="#contact" 
-          className="inline-flex items-center justify-center bg-bg text-text border border-border px-8 py-4 rounded-xl font-semibold hover:bg-bg-alt transition-all transform hover:-translate-y-1"
+          className="inline-flex items-center justify-center bg-white text-black px-8 py-4 rounded-xl font-semibold transition-all transform hover:-translate-y-1 shadow-lg shadow-white/10"
         >
           Get in Touch
         </a>
@@ -139,7 +154,7 @@ const About = () => (
               referrerPolicy="no-referrer"
             />
           </div>
-          <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-primary/10 rounded-full -z-10 blur-2xl" />
+          <div className="absolute -bottom-6 -right-6 w-32 h-32 gradient-bg opacity-20 rounded-full -z-10 blur-2xl" />
         </motion.div>
 
         <motion.div
@@ -148,7 +163,14 @@ const About = () => (
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">About Me</h2>
+          <GradientText
+            colors={["#5227FF", "#FF9FFC", "#B19EEF"]}
+            animationSpeed={8}
+            showBorder={false}
+            className="text-3xl md:text-4xl font-bold mb-6"
+          >
+            About Me
+          </GradientText>
           <p className="text-lg text-text-muted leading-relaxed mb-6">
             I am a passionate web developer with a focus on creating clean, intuitive, and responsive user experiences. 
             I love turning complex problems into simple, beautiful interface designs.
@@ -166,32 +188,19 @@ const About = () => (
 const Projects = () => {
   const projects = [
     {
-      title: "E-commerce Platform",
-      description: "A modern shopping experience with real-time inventory and seamless checkout.",
-      image: "https://picsum.photos/seed/shop/600/400",
-      link: "#",
-      tags: ["React", "Tailwind", "Firebase"]
-    },
-    {
-      title: "Task Management App",
-      description: "A productivity tool designed to help teams collaborate and stay organized.",
-      image: "https://picsum.photos/seed/task/600/400",
-      link: "#",
-      tags: ["TypeScript", "Node.js", "MongoDB"]
-    },
-    {
-      title: "Weather Dashboard",
-      description: "Real-time weather tracking with beautiful visualizations and forecasts.",
-      image: "https://picsum.photos/seed/weather/600/400",
-      link: "#",
-      tags: ["React", "API", "Chart.js"]
-    },
-    {
       title: "HDFC Bank Campaign",
       description: "An integrated fraud awareness campaign for HDFC Bank focused on educating users about digital scams and encouraging safer banking behavior through multi-channel marketing strategies.",
       image: "https://i.postimg.cc/s2pvqM1D/Screenshot-2026-03-19-164544.png",
       link: "https://drive.google.com/file/d/1m1X8_9U6f4K_fCi9trDRO12VpMdE-ekA/view?usp=sharing",
       tags: ["Marketing", "Strategy", "Research"],
+      isPdf: true
+    },
+    {
+      title: "Boat Pitch Deck",
+      description: "A strategic marketing campaign for boAt Airdopes AURA aimed at positioning it as an affordable-premium audio product for young users through a digital-first, lifestyle-driven approach.",
+      image: "https://i.postimg.cc/j5ZTW7M3/Screenshot-2026-03-19-175324.png",
+      link: "https://drive.google.com/file/d/1MZa5yXoqKnNOetWxQ06dubkf3iIzhaFp/view?usp=drive_link",
+      tags: ["Marketing", "Digital", "Branding"],
       isPdf: true
     }
   ];
@@ -200,7 +209,14 @@ const Projects = () => {
     <section id="projects" className="section-padding bg-bg-alt">
       <div className="container-max">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Selected Projects</h2>
+          <GradientText
+            colors={["#5227FF", "#FF9FFC", "#B19EEF"]}
+            animationSpeed={8}
+            showBorder={false}
+            className="text-3xl md:text-4xl font-bold mb-4"
+          >
+            Selected Projects
+          </GradientText>
           <p className="text-text-muted max-w-2xl mx-auto">A showcase of my recent work and technical projects.</p>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -211,7 +227,7 @@ const Projects = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ delay: index * 0.15, duration: 0.8, ease: "easeOut" }}
-              className="group bg-bg border border-border rounded-2xl overflow-hidden hover:shadow-2xl hover:shadow-primary/5 transition-all duration-300 transform hover:-translate-y-2"
+              className="group bg-bg border border-border rounded-2xl overflow-hidden hover:shadow-2xl hover:shadow-indigo-500/5 transition-all duration-300 transform hover:-translate-y-2"
             >
               <div className="aspect-video overflow-hidden relative">
                 <img 
@@ -220,17 +236,23 @@ const Projects = () => {
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   referrerPolicy="no-referrer"
                 />
-                <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/10 transition-colors duration-300"></div>
+                <div className="absolute inset-0 bg-transparent group-hover:gradient-bg group-hover:opacity-10 transition-all duration-300"></div>
               </div>
               <div className="p-6">
                 <div className="flex gap-2 mb-4 flex-wrap">
                   {project.tags.map(tag => (
-                    <span key={tag} className="text-[10px] font-bold uppercase tracking-wider px-2 py-1 bg-primary/5 text-primary rounded-md">
-                      {tag}
+                    <span key={tag} className="text-[10px] font-bold uppercase tracking-wider px-2 py-1 bg-bg-alt border border-border rounded-md">
+                      <GradientText
+                        colors={["#5227FF", "#FF9FFC", "#B19EEF"]}
+                        animationSpeed={8}
+                        showBorder={false}
+                      >
+                        {tag}
+                      </GradientText>
                     </span>
                   ))}
                 </div>
-                <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">{project.title}</h3>
+                <h3 className="text-xl font-bold mb-2 group-hover:gradient-icon transition-all">{project.title}</h3>
                 <p className="text-text-muted text-sm mb-6 line-clamp-2">{project.description}</p>
                 <div className="flex items-center gap-4">
                   {project.isPdf ? (
@@ -238,16 +260,28 @@ const Projects = () => {
                       href={project.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:gap-3 transition-all"
+                      className="inline-flex items-center gap-2 text-sm font-bold hover:gap-3 transition-all"
                     >
-                      View PDF <ArrowRight size={16} />
+                      <GradientText
+                        colors={["#5227FF", "#FF9FFC", "#B19EEF"]}
+                        animationSpeed={8}
+                        showBorder={false}
+                      >
+                        View PDF <ArrowRight size={16} className="inline ml-1" />
+                      </GradientText>
                     </a>
                   ) : (
                     <a 
                       href={project.link} 
-                      className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:gap-3 transition-all"
+                      className="inline-flex items-center gap-2 text-sm font-bold hover:gap-3 transition-all"
                     >
-                      View Project <ExternalLink size={16} />
+                      <GradientText
+                        colors={["#5227FF", "#FF9FFC", "#B19EEF"]}
+                        animationSpeed={8}
+                        showBorder={false}
+                      >
+                        View Project <ExternalLink size={16} className="inline ml-1" />
+                      </GradientText>
                     </a>
                   )}
                 </div>
@@ -281,14 +315,21 @@ const Contact = () => {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">Get in Touch</h2>
+            <GradientText
+              colors={["#5227FF", "#FF9FFC", "#B19EEF"]}
+              animationSpeed={8}
+              showBorder={false}
+              className="text-3xl md:text-4xl font-bold mb-6"
+            >
+              Get in Touch
+            </GradientText>
             <p className="text-lg text-text-muted mb-10">
               Have a project in mind or just want to say hi? I'm always open to discussing new opportunities and creative ideas.
             </p>
             <div className="space-y-6">
               <div className="flex items-center gap-5 group">
-                <div className="w-12 h-12 rounded-2xl bg-primary/5 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all duration-300">
-                  <Mail size={20} />
+                <div className="w-12 h-12 rounded-2xl bg-bg-alt border border-border flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-300">
+                  <Mail size={20} className="group-hover:text-black" />
                 </div>
                 <div>
                   <p className="text-xs font-bold text-text-muted uppercase tracking-widest">Email Me</p>
@@ -296,12 +337,12 @@ const Contact = () => {
                 </div>
               </div>
               <div className="flex items-center gap-5 group">
-                <div className="w-12 h-12 rounded-2xl bg-primary/5 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all duration-300">
-                  <Phone size={20} />
+                <div className="w-12 h-12 rounded-2xl bg-bg-alt border border-border flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-300">
+                  <Phone size={20} className="group-hover:text-black" />
                 </div>
                 <div>
                   <p className="text-xs font-bold text-text-muted uppercase tracking-widest">Call Me</p>
-                  <p className="font-semibold">+1 (555) 000-0000</p>
+                  <p className="font-semibold">+91 9004950666</p>
                 </div>
               </div>
             </div>
@@ -320,7 +361,7 @@ const Contact = () => {
                   <input 
                     type="text" 
                     required 
-                    className="w-full px-4 py-3 rounded-xl border border-border bg-bg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm"
+                    className="w-full px-4 py-3 rounded-xl border border-border bg-bg focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-sm"
                     placeholder="John Doe"
                   />
                 </div>
@@ -329,7 +370,7 @@ const Contact = () => {
                   <input 
                     type="email" 
                     required 
-                    className="w-full px-4 py-3 rounded-xl border border-border bg-bg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm"
+                    className="w-full px-4 py-3 rounded-xl border border-border bg-bg focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-sm"
                     placeholder="john@example.com"
                   />
                 </div>
@@ -339,13 +380,13 @@ const Contact = () => {
                 <textarea 
                   required 
                   rows={4}
-                  className="w-full px-4 py-3 rounded-xl border border-border bg-bg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all resize-none text-sm"
+                  className="w-full px-4 py-3 rounded-xl border border-border bg-bg focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all resize-none text-sm"
                   placeholder="Tell me about your project..."
                 ></textarea>
               </div>
               <button 
                 type="submit"
-                className="w-full bg-primary text-white py-4 rounded-xl font-bold uppercase tracking-widest text-xs hover:bg-primary-hover transition-all transform active:scale-[0.98] shadow-lg shadow-primary/20"
+                className="w-full bg-white text-black py-4 rounded-xl font-bold uppercase tracking-widest text-xs transition-all transform active:scale-[0.98] shadow-lg shadow-white/10"
               >
                 Send Message
               </button>
@@ -370,14 +411,21 @@ const Footer = () => (
   <footer className="py-12 px-6 border-t border-border bg-bg">
     <div className="container-max flex flex-col md:flex-row justify-between items-center gap-8">
       <div className="text-center md:text-left">
-        <p className="text-lg font-bold tracking-tighter text-primary mb-2">Ankush Shetty</p>
+        <GradientText
+          colors={["#5227FF", "#FF9FFC", "#B19EEF"]}
+          animationSpeed={8}
+          showBorder={false}
+          className="text-lg font-bold tracking-tighter mb-2"
+        >
+          Ankush Shetty
+        </GradientText>
         <p className="text-sm text-text-muted">© 2026. All rights reserved.</p>
       </div>
       <div className="flex gap-6">
-        <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-xl bg-bg-alt flex items-center justify-center text-text-muted hover:bg-primary hover:text-white transition-all duration-300">
+        <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-xl bg-bg-alt flex items-center justify-center text-text-muted hover:bg-white hover:text-black transition-all duration-300">
           <Github size={20} />
         </a>
-        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-xl bg-bg-alt flex items-center justify-center text-text-muted hover:bg-primary hover:text-white transition-all duration-300">
+        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-xl bg-bg-alt flex items-center justify-center text-text-muted hover:bg-white hover:text-black transition-all duration-300">
           <Linkedin size={20} />
         </a>
       </div>
@@ -415,7 +463,14 @@ const Certificates = () => {
     <section id="certificates" className="section-padding bg-bg">
       <div className="container-max">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Certifications</h2>
+          <GradientText
+            colors={["#5227FF", "#FF9FFC", "#B19EEF"]}
+            animationSpeed={8}
+            showBorder={false}
+            className="text-3xl md:text-4xl font-bold mb-4"
+          >
+            Certifications
+          </GradientText>
           <p className="text-text-muted max-w-2xl mx-auto">Professional certifications and courses I have completed.</p>
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -435,14 +490,21 @@ const Certificates = () => {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   referrerPolicy="no-referrer"
                 />
-                <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/5 transition-colors duration-300"></div>
+                <div className="absolute inset-0 bg-transparent group-hover:gradient-bg group-hover:opacity-5 transition-all duration-300"></div>
               </div>
               <div className="p-6">
-                <p className="text-[10px] font-bold uppercase tracking-wider text-primary mb-2">{cert.issuer} • {cert.date}</p>
-                <h3 className="text-lg font-bold mb-4 group-hover:text-primary transition-colors">{cert.title}</h3>
+                <GradientText
+                  colors={["#5227FF", "#FF9FFC", "#B19EEF"]}
+                  animationSpeed={8}
+                  showBorder={false}
+                  className="text-[10px] font-bold uppercase tracking-wider mb-2"
+                >
+                  {cert.issuer} • {cert.date}
+                </GradientText>
+                <h3 className="text-lg font-bold mb-4 group-hover:gradient-icon transition-all">{cert.title}</h3>
                 <a 
                   href={cert.link} 
-                  className="inline-flex items-center gap-2 text-sm font-bold text-text hover:text-primary transition-all"
+                  className="inline-flex items-center gap-2 text-sm font-bold text-text hover:gradient-icon transition-all"
                 >
                   View Certificate <ExternalLink size={14} />
                 </a>
