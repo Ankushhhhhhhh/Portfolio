@@ -21,7 +21,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? "bg-white/90 backdrop-blur-md border-b border-border py-4" : "bg-transparent py-6"}`}>
+    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${scrolled ? "bg-bg/90 backdrop-blur-md border-b border-border py-4" : "bg-transparent py-6"}`}>
       <div className="container-max flex justify-between items-center">
         <a href="#home" className="text-xl font-bold tracking-tighter text-primary">Ankush Shetty</a>
         
@@ -45,7 +45,7 @@ const Navbar = () => {
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="md:hidden absolute top-full left-0 w-full bg-white border-b border-border p-6 flex flex-col gap-4 shadow-xl"
+          className="md:hidden absolute top-full left-0 w-full bg-bg-alt border-b border-border p-6 flex flex-col gap-4 shadow-xl"
         >
           {navLinks.map((link) => (
             <a 
@@ -95,7 +95,7 @@ const Hero = () => (
         </a>
         <a 
           href="#contact" 
-          className="inline-flex items-center justify-center bg-white text-text border border-border px-8 py-4 rounded-xl font-semibold hover:bg-bg-alt transition-all transform hover:-translate-y-1"
+          className="inline-flex items-center justify-center bg-bg text-text border border-border px-8 py-4 rounded-xl font-semibold hover:bg-bg-alt transition-all transform hover:-translate-y-1"
         >
           Get in Touch
         </a>
@@ -105,7 +105,7 @@ const Hero = () => (
 );
 
 const About = () => (
-  <section id="about" className="section-padding bg-white">
+  <section id="about" className="section-padding bg-bg">
     <div className="container-max">
       <div className="grid md:grid-cols-2 gap-12 items-center">
         <motion.div
@@ -186,7 +186,7 @@ const Projects = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1, duration: 0.5 }}
-              className="group bg-white border border-border rounded-2xl overflow-hidden hover:shadow-2xl hover:shadow-primary/5 transition-all duration-300 transform hover:-translate-y-2"
+              className="group bg-bg border border-border rounded-2xl overflow-hidden hover:shadow-2xl hover:shadow-primary/5 transition-all duration-300 transform hover:-translate-y-2"
             >
               <div className="aspect-video overflow-hidden relative">
                 <img 
@@ -233,7 +233,7 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="section-padding bg-white">
+    <section id="contact" className="section-padding bg-bg">
       <div className="container-max">
         <div className="grid lg:grid-cols-2 gap-16">
           <motion.div
@@ -281,7 +281,7 @@ const Contact = () => {
                   <input 
                     type="text" 
                     required 
-                    className="w-full px-4 py-3 rounded-xl border border-border bg-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm"
+                    className="w-full px-4 py-3 rounded-xl border border-border bg-bg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm"
                     placeholder="John Doe"
                   />
                 </div>
@@ -290,7 +290,7 @@ const Contact = () => {
                   <input 
                     type="email" 
                     required 
-                    className="w-full px-4 py-3 rounded-xl border border-border bg-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm"
+                    className="w-full px-4 py-3 rounded-xl border border-border bg-bg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm"
                     placeholder="john@example.com"
                   />
                 </div>
@@ -300,7 +300,7 @@ const Contact = () => {
                 <textarea 
                   required 
                   rows={4}
-                  className="w-full px-4 py-3 rounded-xl border border-border bg-white focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all resize-none text-sm"
+                  className="w-full px-4 py-3 rounded-xl border border-border bg-bg focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all resize-none text-sm"
                   placeholder="Tell me about your project..."
                 ></textarea>
               </div>
@@ -328,7 +328,7 @@ const Contact = () => {
 };
 
 const Footer = () => (
-  <footer className="py-12 px-6 border-t border-border bg-white">
+  <footer className="py-12 px-6 border-t border-border bg-bg">
     <div className="container-max flex flex-col md:flex-row justify-between items-center gap-8">
       <div className="text-center md:text-left">
         <p className="text-lg font-bold tracking-tighter text-primary mb-2">Ankush Shetty</p>
