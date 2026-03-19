@@ -123,10 +123,28 @@ const Hero = () => (
 const About = () => (
   <section id="about" className="section-padding bg-bg">
     <div className="container-max">
-      <div className="max-w-3xl mx-auto text-center">
+      <div className="grid md:grid-cols-2 gap-12 items-center">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, x: -30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          className="relative"
+        >
+          <div className="aspect-square rounded-2xl overflow-hidden shadow-2xl">
+            <img 
+              src="https://i.postimg.cc/5tnMXJrJ/download.jpg" 
+              alt="Ankush" 
+              className="w-full h-full object-cover"
+              referrerPolicy="no-referrer"
+            />
+          </div>
+          <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-primary/10 rounded-full -z-10 blur-2xl" />
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, x: 30 }}
+          whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
@@ -171,7 +189,7 @@ const Projects = () => {
     {
       title: "HDFC Bank Campaign",
       description: "An integrated fraud awareness campaign for HDFC Bank focused on educating users about digital scams and encouraging safer banking behavior through multi-channel marketing strategies.",
-      image: "https://i.ibb.co/jvbdHkrc/hdfc.png",
+      image: "https://i.postimg.cc/s2pvqM1D/Screenshot-2026-03-19-164544.png",
       link: "https://drive.google.com/file/d/1m1X8_9U6f4K_fCi9trDRO12VpMdE-ekA/view?usp=sharing",
       tags: ["Marketing", "Strategy", "Research"],
       isPdf: true
