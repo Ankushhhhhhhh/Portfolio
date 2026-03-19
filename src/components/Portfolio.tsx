@@ -109,10 +109,10 @@ const About = () => (
     <div className="container-max">
       <div className="grid md:grid-cols-2 gap-12 items-center">
         <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-6">About Me</h2>
           <p className="text-lg text-text-muted leading-relaxed mb-6">
@@ -125,21 +125,21 @@ const About = () => (
           </p>
         </motion.div>
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
+          initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
           className="relative"
         >
           <div className="aspect-square rounded-3xl bg-primary/5 border border-primary/10 flex items-center justify-center overflow-hidden">
             <img 
-              src="https://picsum.photos/seed/developer/800/800" 
+              src="https://i.ibb.co/FkLqL8qN/IMG-20250612-WA01452-jpg.jpg" 
               alt="Developer" 
-              className="w-full h-full object-cover opacity-80"
+              className="w-full h-full object-cover contrast-[1.05] brightness-[1.02]"
+              style={{ imageRendering: '-webkit-optimize-contrast' }}
               referrerPolicy="no-referrer"
             />
           </div>
-          <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-primary/10 rounded-full blur-3xl -z-10"></div>
         </motion.div>
       </div>
     </div>
@@ -182,10 +182,10 @@ const Projects = () => {
           {projects.map((project, index) => (
             <motion.div 
               key={index}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1, duration: 0.5 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ delay: index * 0.15, duration: 0.8, ease: "easeOut" }}
               className="group bg-bg border border-border rounded-2xl overflow-hidden hover:shadow-2xl hover:shadow-primary/5 transition-all duration-300 transform hover:-translate-y-2"
             >
               <div className="aspect-video overflow-hidden relative">
@@ -237,10 +237,10 @@ const Contact = () => {
       <div className="container-max">
         <div className="grid lg:grid-cols-2 gap-16">
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-6">Get in Touch</h2>
             <p className="text-lg text-text-muted mb-10">
@@ -269,10 +269,10 @@ const Contact = () => {
           </motion.div>
           
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
           >
             <form onSubmit={handleSubmit} className="bg-bg-alt p-8 md:p-10 rounded-3xl border border-border space-y-6 shadow-sm">
               <div className="grid md:grid-cols-2 gap-6">
