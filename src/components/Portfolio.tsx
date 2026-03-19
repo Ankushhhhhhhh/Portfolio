@@ -16,7 +16,7 @@ import {
   Globe
 } from "lucide-react";
 import { useState, useEffect, useCallback, useRef, FormEvent } from "react";
-import LiquidEther from "./LiquidEther";
+import Aurora from "./Aurora";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -81,26 +81,13 @@ const Navbar = () => {
 
 const Hero = () => (
   <section id="home" className="min-h-screen relative flex flex-col justify-center items-center text-center px-6 pt-20 bg-gradient-to-b from-bg to-bg-alt overflow-hidden">
-    {/* Liquid Background */}
-    <div className="absolute inset-0 z-0 opacity-30">
-      <LiquidEther
-        colors={[ '#5227FF', '#FF9FFC', '#B19EEF' ]}
-        mouseForce={20}
-        cursorSize={100}
-        isViscous
-        viscous={30}
-        iterationsViscous={32}
-        iterationsPoisson={32}
-        resolution={0.5}
-        isBounce={false}
-        autoDemo
-        autoSpeed={0.5}
-        autoIntensity={2.2}
-        takeoverDuration={0.25}
-        autoResumeDelay={3000}
-        autoRampDuration={0.6}
-      />
-    </div>
+    {/* Aurora Background */}
+    <Aurora
+      colorStops={["#7cff67", "#B19EEF", "#5227FF"]}
+      blend={0.5}
+      amplitude={1.0}
+      speed={1}
+    />
     
     <motion.div
       initial={{ opacity: 0, y: 20 }}
