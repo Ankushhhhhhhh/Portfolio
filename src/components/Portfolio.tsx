@@ -1,5 +1,20 @@
-import { motion } from "motion/react";
-import { Github, Linkedin, Mail, Phone, ExternalLink, Menu, X } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
+import { 
+  Github, 
+  Linkedin, 
+  Mail, 
+  Phone, 
+  ExternalLink, 
+  Menu, 
+  X, 
+  ArrowRight, 
+  Target, 
+  Users, 
+  Layers, 
+  Zap,
+  Download,
+  Globe
+} from "lucide-react";
 import { useState, useEffect, useCallback, useRef, FormEvent } from "react";
 import Aurora from "./Aurora";
 
@@ -17,6 +32,7 @@ const Navbar = () => {
     { name: "Home", href: "#home" },
     { name: "About", href: "#about" },
     { name: "Projects", href: "#projects" },
+    { name: "Certificates", href: "#certificates" },
     { name: "Contact", href: "#contact" },
   ];
 
@@ -107,7 +123,7 @@ const Hero = () => (
 const About = () => (
   <section id="about" className="section-padding bg-bg">
     <div className="container-max">
-      <div className="grid md:grid-cols-2 gap-12 items-center">
+      <div className="max-w-3xl mx-auto text-center">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -123,23 +139,6 @@ const About = () => (
             My journey in tech is driven by curiosity and a commitment to continuous learning. 
             I specialize in building modern web applications using the latest technologies.
           </p>
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="relative"
-        >
-          <div className="aspect-square rounded-3xl bg-primary/5 border border-primary/10 flex items-center justify-center overflow-hidden">
-            <img 
-              src="https://i.ibb.co/FkLqL8qN/IMG-20250612-WA01452-jpg.jpg" 
-              alt="Developer" 
-              className="w-full h-full object-cover contrast-[1.05] brightness-[1.02]"
-              style={{ imageRendering: '-webkit-optimize-contrast' }}
-              referrerPolicy="no-referrer"
-            />
-          </div>
         </motion.div>
       </div>
     </div>
@@ -168,6 +167,14 @@ const Projects = () => {
       image: "https://picsum.photos/seed/weather/600/400",
       link: "#",
       tags: ["React", "API", "Chart.js"]
+    },
+    {
+      title: "HDFC Bank Campaign",
+      description: "An integrated fraud awareness campaign for HDFC Bank focused on educating users about digital scams and encouraging safer banking behavior through multi-channel marketing strategies.",
+      image: "https://i.ibb.co/jvbdHkrc/hdfc.png",
+      link: "https://drive.google.com/file/d/1m1X8_9U6f4K_fCi9trDRO12VpMdE-ekA/view?usp=sharing",
+      tags: ["Marketing", "Strategy", "Research"],
+      isPdf: true
     }
   ];
 
@@ -207,17 +214,31 @@ const Projects = () => {
                 </div>
                 <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition-colors">{project.title}</h3>
                 <p className="text-text-muted text-sm mb-6 line-clamp-2">{project.description}</p>
-                <a 
-                  href={project.link} 
-                  className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:gap-3 transition-all"
-                >
-                  View Project <ExternalLink size={16} />
-                </a>
+                <div className="flex items-center gap-4">
+                  {project.isPdf ? (
+                    <a 
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:gap-3 transition-all"
+                    >
+                      View PDF <ArrowRight size={16} />
+                    </a>
+                  ) : (
+                    <a 
+                      href={project.link} 
+                      className="inline-flex items-center gap-2 text-sm font-bold text-primary hover:gap-3 transition-all"
+                    >
+                      View Project <ExternalLink size={16} />
+                    </a>
+                  )}
+                </div>
               </div>
             </motion.div>
           ))}
         </div>
       </div>
+
     </section>
   );
 };
@@ -347,4 +368,73 @@ const Footer = () => (
 );
 
 
-export { Navbar, Hero, About, Projects, Contact, Footer };
+const Certificates = () => {
+  const certificates = [
+    {
+      title: "Full Stack Web Development",
+      issuer: "Coursera",
+      date: "2025",
+      image: "https://picsum.photos/seed/cert1/600/400",
+      link: "#"
+    },
+    {
+      title: "Advanced React Patterns",
+      issuer: "Udemy",
+      date: "2024",
+      image: "https://picsum.photos/seed/cert2/600/400",
+      link: "#"
+    },
+    {
+      title: "UI/UX Design Essentials",
+      issuer: "Google",
+      date: "2024",
+      image: "https://picsum.photos/seed/cert3/600/400",
+      link: "#"
+    }
+  ];
+
+  return (
+    <section id="certificates" className="section-padding bg-bg">
+      <div className="container-max">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Certifications</h2>
+          <p className="text-text-muted max-w-2xl mx-auto">Professional certifications and courses I have completed.</p>
+        </div>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {certificates.map((cert, index) => (
+            <motion.div 
+              key={index}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ delay: index * 0.15, duration: 0.8, ease: "easeOut" }}
+              className="group bg-bg-alt border border-border rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300"
+            >
+              <div className="aspect-[4/3] overflow-hidden relative">
+                <img 
+                  src={cert.image} 
+                  alt={cert.title} 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-primary/0 group-hover:bg-primary/5 transition-colors duration-300"></div>
+              </div>
+              <div className="p-6">
+                <p className="text-[10px] font-bold uppercase tracking-wider text-primary mb-2">{cert.issuer} • {cert.date}</p>
+                <h3 className="text-lg font-bold mb-4 group-hover:text-primary transition-colors">{cert.title}</h3>
+                <a 
+                  href={cert.link} 
+                  className="inline-flex items-center gap-2 text-sm font-bold text-text hover:text-primary transition-all"
+                >
+                  View Certificate <ExternalLink size={14} />
+                </a>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export { Navbar, Hero, About, Projects, Certificates, Contact, Footer };

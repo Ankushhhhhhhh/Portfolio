@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { Navbar, Hero, About, Projects, Contact, Footer } from "./components/Portfolio";
+import { Navbar, Hero, About, Projects, Certificates, Contact, Footer } from "./components/Portfolio";
 import BubbleMenu from "./components/BubbleMenu";
 
 const menuItems = [
@@ -27,6 +27,13 @@ const menuItems = [
     ariaLabel: 'Projects',
     rotation: 8,
     hoverStyles: { bgColor: '#f59e0b', textColor: '#ffffff' }
+  },
+  {
+    label: 'certificates',
+    href: '#certificates',
+    ariaLabel: 'Certificates',
+    rotation: -8,
+    hoverStyles: { bgColor: '#10b981', textColor: '#ffffff' }
   },
   {
     label: 'contact',
@@ -54,6 +61,7 @@ export default function App() {
         <Hero />
         <About />
         <Projects />
+        <Certificates />
         <Contact />
       </main>
       <Footer />
