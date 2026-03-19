@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
 import { Github, Linkedin, Mail, Phone, ExternalLink, Menu, X } from "lucide-react";
 import { useState, useEffect, useCallback, useRef, FormEvent } from "react";
+import Aurora from "./Aurora";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -63,12 +64,20 @@ const Navbar = () => {
 };
 
 const Hero = () => (
-  <section id="home" className="min-h-screen flex flex-col justify-center items-center text-center px-6 pt-20 bg-gradient-to-b from-bg to-bg-alt">
+  <section id="home" className="min-h-screen relative flex flex-col justify-center items-center text-center px-6 pt-20 bg-gradient-to-b from-bg to-bg-alt overflow-hidden">
+    {/* Aurora Background */}
+    <Aurora
+      colorStops={["#7cff67", "#B19EEF", "#5227FF"]}
+      blend={0.5}
+      amplitude={1.0}
+      speed={1}
+    />
+    
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      className="container-max"
+      className="container-max relative z-10"
     >
       <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-6 leading-tight">
         Building <span className="text-primary">Modern</span> Digital Experiences
