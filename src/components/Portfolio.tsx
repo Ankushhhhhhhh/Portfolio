@@ -8,6 +8,7 @@ import {
   Menu, 
   X, 
   ArrowRight, 
+  ArrowLeft,
   Target, 
   Users, 
   Layers, 
@@ -18,6 +19,7 @@ import {
 import { useState, useEffect, useCallback, useRef, FormEvent } from "react";
 import Aurora from "./Aurora";
 import GradientText from "./GradientText";
+import useEmblaCarousel from 'embla-carousel-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -202,11 +204,49 @@ const Projects = () => {
       link: "https://drive.google.com/file/d/1MZa5yXoqKnNOetWxQ06dubkf3iIzhaFp/view?usp=drive_link",
       tags: ["Marketing", "Digital", "Branding"],
       isPdf: true
+    },
+    {
+      title: "Sleepy Owl SEO",
+      description: "An SEO-focused project for Sleepy Owl aimed at improving online visibility and traffic through keyword research, technical optimization, and content strategy.",
+      image: "https://i.postimg.cc/zBgxRZDf/Screenshot-2026-03-19-182359.png",
+      link: "https://drive.google.com/file/d/1Xh_rGS3SiSnLqsr8VzJZMiQagAwF3ZOk/view?usp=drive_link",
+      tags: ["SEO", "Marketing"],
+      isPdf: true
+    },
+    {
+      title: "Creators Communityy Website",
+      description: "Built a webinar landing page for a creators community, integrating Synamate CRM and payment systems to enable seamless registrations, generating ₹12,000+ in revenue.",
+      image: "https://i.postimg.cc/hthmyLks/Screenshot-2026-03-19-183844.png",
+      link: "https://webinar.creatorcommunityy.com",
+      tags: ["Website", "Sales"],
+      isPdf: false
     }
   ];
 
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: 'center', skipSnaps: false });
+  const [prevBtnEnabled, setPrevBtnEnabled] = useState(false);
+  const [nextBtnEnabled, setNextBtnEnabled] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+
+  const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi]);
+  const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
+
+  const onSelect = useCallback(() => {
+    if (!emblaApi) return;
+    setSelectedIndex(emblaApi.selectedScrollSnap());
+    setPrevBtnEnabled(emblaApi.canScrollPrev());
+    setNextBtnEnabled(emblaApi.canScrollNext());
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+    onSelect();
+    emblaApi.on('select', onSelect);
+    emblaApi.on('reInit', onSelect);
+  }, [emblaApi, onSelect]);
+
   return (
-    <section id="projects" className="section-padding bg-bg-alt">
+    <section id="projects" className="section-padding bg-bg-alt overflow-hidden">
       <div className="container-max">
         <div className="text-center mb-16">
           <GradientText
@@ -219,78 +259,95 @@ const Projects = () => {
           </GradientText>
           <p className="text-text-muted max-w-2xl mx-auto">A showcase of my recent work and technical projects.</p>
         </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, index) => (
-            <motion.div 
-              key={index}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ delay: index * 0.15, duration: 0.8, ease: "easeOut" }}
-              className="group bg-bg border border-border rounded-2xl overflow-hidden hover:shadow-2xl hover:shadow-indigo-500/5 transition-all duration-300 transform hover:-translate-y-2"
+
+        <div className="relative max-w-5xl mx-auto">
+          <div className="overflow-hidden" ref={emblaRef}>
+            <div className="flex">
+              {projects.map((project, index) => (
+                <div key={index} className="flex-[0_0_100%] min-w-0 px-4">
+                  <motion.div 
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    className="bg-bg border border-border rounded-[40px] overflow-hidden hover:shadow-2xl hover:shadow-indigo-500/5 transition-all duration-300 flex flex-col md:flex-row h-full min-h-[450px]"
+                  >
+                    <div className="md:w-1/2 aspect-video md:aspect-auto overflow-hidden relative">
+                      <img 
+                        src={project.image} 
+                        alt={project.title} 
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        referrerPolicy="no-referrer"
+                      />
+                      <div className="absolute inset-0 bg-transparent group-hover:gradient-bg group-hover:opacity-10 transition-all duration-300"></div>
+                    </div>
+                    <div className="md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
+                      <div className="flex gap-2 mb-6 flex-wrap">
+                        {project.tags.map(tag => (
+                          <span key={tag} className="text-[10px] font-bold uppercase tracking-wider px-2 py-1 bg-bg-alt border border-border rounded-md">
+                            <GradientText
+                              colors={["#5227FF", "#FF9FFC", "#B19EEF"]}
+                              animationSpeed={8}
+                              showBorder={false}
+                            >
+                              {tag}
+                            </GradientText>
+                          </span>
+                        ))}
+                      </div>
+                      <h3 className="text-3xl font-bold mb-4 group-hover:gradient-icon transition-all">{project.title}</h3>
+                      <p className="text-text-muted text-lg mb-10 leading-relaxed">{project.description}</p>
+                      <div className="flex items-center gap-4">
+                        <a 
+                          href={project.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 text-sm font-bold group"
+                        >
+                          <GradientText
+                            colors={["#5227FF", "#FF9FFC", "#B19EEF"]}
+                            animationSpeed={8}
+                            showBorder={false}
+                          >
+                            {project.isPdf ? "View PDF" : "View Project"} 
+                            <ArrowRight size={18} className="inline ml-2 transition-transform group-hover:translate-x-1" />
+                          </GradientText>
+                        </a>
+                      </div>
+                    </div>
+                  </motion.div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Navigation Buttons */}
+          <div className="flex justify-center items-center gap-6 mt-12">
+            <button 
+              onClick={scrollPrev}
+              className="w-14 h-14 rounded-full border border-border flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 active:scale-95 disabled:opacity-30"
+              disabled={!prevBtnEnabled}
             >
-              <div className="aspect-video overflow-hidden relative">
-                <img 
-                  src={project.image} 
-                  alt={project.title} 
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  referrerPolicy="no-referrer"
+              <ArrowLeft size={24} />
+            </button>
+            <div className="flex gap-2">
+              {projects.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => emblaApi && emblaApi.scrollTo(index)}
+                  className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${selectedIndex === index ? 'w-8 bg-white' : 'bg-border hover:bg-text-muted'}`}
                 />
-                <div className="absolute inset-0 bg-transparent group-hover:gradient-bg group-hover:opacity-10 transition-all duration-300"></div>
-              </div>
-              <div className="p-6">
-                <div className="flex gap-2 mb-4 flex-wrap">
-                  {project.tags.map(tag => (
-                    <span key={tag} className="text-[10px] font-bold uppercase tracking-wider px-2 py-1 bg-bg-alt border border-border rounded-md">
-                      <GradientText
-                        colors={["#5227FF", "#FF9FFC", "#B19EEF"]}
-                        animationSpeed={8}
-                        showBorder={false}
-                      >
-                        {tag}
-                      </GradientText>
-                    </span>
-                  ))}
-                </div>
-                <h3 className="text-xl font-bold mb-2 group-hover:gradient-icon transition-all">{project.title}</h3>
-                <p className="text-text-muted text-sm mb-6 line-clamp-2">{project.description}</p>
-                <div className="flex items-center gap-4">
-                  {project.isPdf ? (
-                    <a 
-                      href={project.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-sm font-bold hover:gap-3 transition-all"
-                    >
-                      <GradientText
-                        colors={["#5227FF", "#FF9FFC", "#B19EEF"]}
-                        animationSpeed={8}
-                        showBorder={false}
-                      >
-                        View PDF <ArrowRight size={16} className="inline ml-1" />
-                      </GradientText>
-                    </a>
-                  ) : (
-                    <a 
-                      href={project.link} 
-                      className="inline-flex items-center gap-2 text-sm font-bold hover:gap-3 transition-all"
-                    >
-                      <GradientText
-                        colors={["#5227FF", "#FF9FFC", "#B19EEF"]}
-                        animationSpeed={8}
-                        showBorder={false}
-                      >
-                        View Project <ExternalLink size={16} className="inline ml-1" />
-                      </GradientText>
-                    </a>
-                  )}
-                </div>
-              </div>
-            </motion.div>
-          ))}
+              ))}
+            </div>
+            <button 
+              onClick={scrollNext}
+              className="w-14 h-14 rounded-full border border-border flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 active:scale-95 disabled:opacity-30"
+              disabled={!nextBtnEnabled}
+            >
+              <ArrowRight size={24} />
+            </button>
+          </div>
         </div>
       </div>
-
     </section>
   );
 };
