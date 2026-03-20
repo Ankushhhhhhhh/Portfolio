@@ -5,35 +5,35 @@ import './BubbleMenu.css';
 
 const DEFAULT_ITEMS = [
   {
-    label: 'home',
+    label: 'Home',
     href: '#home',
     ariaLabel: 'Home',
     rotation: -8,
     hoverStyles: { bgColor: '#3b82f6', textColor: '#ffffff' }
   },
   {
-    label: 'about',
+    label: 'About',
     href: '#about',
     ariaLabel: 'About',
     rotation: 8,
     hoverStyles: { bgColor: '#10b981', textColor: '#ffffff' }
   },
   {
-    label: 'projects',
+    label: 'Projects',
     href: '#projects',
     ariaLabel: 'Documentation',
     rotation: 8,
     hoverStyles: { bgColor: '#f59e0b', textColor: '#ffffff' }
   },
   {
-    label: 'blog',
+    label: 'Blog',
     href: '#',
     ariaLabel: 'Blog',
     rotation: 8,
     hoverStyles: { bgColor: '#ef4444', textColor: '#ffffff' }
   },
   {
-    label: 'contact',
+    label: 'Contact',
     href: '#contact',
     ariaLabel: 'Contact',
     rotation: -8,

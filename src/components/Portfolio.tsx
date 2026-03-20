@@ -236,6 +236,22 @@ const Projects = () => {
       link: "https://webinar.creatorcommunityy.com",
       tags: ["Website", "Sales"],
       isPdf: false
+    },
+    {
+      title: "Group Behaviour",
+      description: "A study on team dynamics and group behaviour analyzing how collaboration, communication, and interpersonal interactions impact organisational performance.",
+      image: "https://i.postimg.cc/02CbH5d7/Screenshot-2026-03-20-152532.png",
+      link: "https://drive.google.com/file/d/18SlIcVadfxCF6Ym_0R72B-PH3p5YoIjZ/view?usp=sharing",
+      tags: ["Teamwork", "Communication"],
+      isPdf: true
+    },
+    {
+      title: "Flexispot E- Commerce",
+      description: "FlexiSpot’s ergonomic workspace solutions strategy. It covers their brand identity, core values, and product focus particularly height-adjustable standing desks. It analyzes target audiences, compares competitors like IKEA, and highlights FlexiSpot’s differentiation premium ergonomics at mid-range pricing.",
+      image: "https://i.postimg.cc/N0tYhRgd/Screenshot-2026-03-20-153623.png",
+      link: "https://drive.google.com/file/d/1hpYWQTLn131qU57EvxEp0FxAMPi222O9/view?usp=sharing",
+      tags: ["E-commerce", "Sales", "Listing"],
+      isPdf: true
     }
   ];
 
