@@ -20,6 +20,7 @@ import { useState, useEffect, useCallback, useRef, FormEvent } from "react";
 import Aurora from "./Aurora";
 import GradientText from "./GradientText";
 import useEmblaCarousel from 'embla-carousel-react';
+import OrbitImages from './OrbitImages';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -492,34 +493,19 @@ const Footer = () => (
 
 
 const Certificates = () => {
-  const certificates = [
-    {
-      title: "Full Stack Web Development",
-      issuer: "Coursera",
-      date: "2025",
-      image: "https://picsum.photos/seed/cert1/600/400",
-      link: "#"
-    },
-    {
-      title: "Advanced React Patterns",
-      issuer: "Udemy",
-      date: "2024",
-      image: "https://picsum.photos/seed/cert2/600/400",
-      link: "#"
-    },
-    {
-      title: "UI/UX Design Essentials",
-      issuer: "Google",
-      date: "2024",
-      image: "https://picsum.photos/seed/cert3/600/400",
-      link: "#"
-    }
+  const images = [
+    "https://picsum.photos/300/300?grayscale&random=1",
+    "https://picsum.photos/300/300?grayscale&random=2",
+    "https://picsum.photos/300/300?grayscale&random=3",
+    "https://picsum.photos/300/300?grayscale&random=4",
+    "https://picsum.photos/300/300?grayscale&random=5",
+    "https://picsum.photos/300/300?grayscale&random=6",
   ];
 
   return (
-    <section id="certificates" className="section-padding bg-bg">
+    <section id="certificates" className="section-padding bg-bg overflow-hidden">
       <div className="container-max">
-        <div className="text-center mb-16">
+        <div className="text-center mb-8">
           <GradientText
             colors={["#5227FF", "#FF9FFC", "#B19EEF"]}
             animationSpeed={8}
@@ -530,44 +516,24 @@ const Certificates = () => {
           </GradientText>
           <p className="text-text-muted max-w-2xl mx-auto">Professional certifications and courses I have completed.</p>
         </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {certificates.map((cert, index) => (
-            <motion.div 
-              key={index}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ delay: index * 0.15, duration: 0.8, ease: "easeOut" }}
-              className="group bg-bg-alt border border-border rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300"
-            >
-              <div className="aspect-[4/3] overflow-hidden relative">
-                <img 
-                  src={cert.image} 
-                  alt={cert.title} 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  referrerPolicy="no-referrer"
-                />
-                <div className="absolute inset-0 bg-transparent group-hover:gradient-bg group-hover:opacity-5 transition-all duration-300"></div>
-              </div>
-              <div className="p-6">
-                <GradientText
-                  colors={["#5227FF", "#FF9FFC", "#B19EEF"]}
-                  animationSpeed={8}
-                  showBorder={false}
-                  className="text-[10px] font-bold uppercase tracking-wider mb-2"
-                >
-                  {cert.issuer} • {cert.date}
-                </GradientText>
-                <h3 className="text-lg font-bold mb-4 group-hover:gradient-icon transition-all">{cert.title}</h3>
-                <a 
-                  href={cert.link} 
-                  className="inline-flex items-center gap-2 text-sm font-bold text-text hover:gradient-icon transition-all"
-                >
-                  View Certificate <ExternalLink size={14} />
-                </a>
-              </div>
-            </motion.div>
-          ))}
+        
+        <div className="relative h-[500px] md:h-[600px] flex items-center justify-center">
+          <OrbitImages
+            images={images}
+            shape="ellipse"
+            radiusX={window.innerWidth < 768 ? 160 : 340}
+            radiusY={window.innerWidth < 768 ? 40 : 80}
+            rotation={-8}
+            duration={30}
+            itemSize={window.innerWidth < 768 ? 60 : 100}
+            responsive={true}
+            radius={160}
+            direction="normal"
+            fill
+            showPath
+            paused={false}
+            className="w-full h-full"
+          />
         </div>
       </div>
     </section>
