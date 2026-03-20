@@ -408,7 +408,7 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-10 md:py-20 bg-bg min-h-[600px] flex items-center justify-center relative overflow-hidden">
+    <section id="contact" className="py-10 md:py-20 bg-gradient-to-t from-bg to-bg-alt min-h-[600px] flex items-center justify-center relative overflow-hidden">
       <StarField />
       <div className="container-max relative z-10" ref={containerRef}>
         <AnimatePresence mode="wait">
@@ -433,7 +433,7 @@ const Contact = () => {
               <div className="flex flex-col md:flex-row items-center justify-center gap-8 h-32">
                 <button
                   onClick={() => setIsOfficial(true)}
-                  className="px-12 py-4 bg-white text-black font-bold rounded-2xl text-xl hover:scale-110 transition-transform shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+                  className="px-12 py-4 bg-gradient-to-r from-[#5227FF] via-[#FF9FFC] to-[#B19EEF] text-white font-bold rounded-2xl text-xl hover:scale-110 transition-transform shadow-[0_0_20px_rgba(82,39,255,0.3)]"
                 >
                   Yes
                 </button>
@@ -442,7 +442,7 @@ const Contact = () => {
                   animate={{ x: noButtonPos.x, y: noButtonPos.y }}
                   onMouseEnter={moveNoButton}
                   onClick={moveNoButton}
-                  className="px-12 py-4 border-2 border-white/20 text-white font-bold rounded-2xl text-xl"
+                  className="px-12 py-4 border-2 border-white/20 text-white font-bold rounded-2xl text-xl hover:border-white/40 transition-all hover:shadow-[0_0_15px_rgba(255,159,252,0.2)]"
                 >
                   No
                 </motion.button>
@@ -456,7 +456,15 @@ const Contact = () => {
               className="max-w-4xl mx-auto"
             >
               <div className="text-center mb-16">
-                <h2 className="text-4xl md:text-6xl font-bold mb-6">Let's Connect</h2>
+                <h2 className="text-4xl md:text-6xl font-bold mb-6">
+                  <GradientText
+                    colors={["#5227FF", "#FF9FFC", "#B19EEF"]}
+                    animationSpeed={8}
+                    showBorder={false}
+                  >
+                    Let's Connect
+                  </GradientText>
+                </h2>
                 <p className="text-text-muted text-lg">You made the right choice. Here's how to reach me.</p>
               </div>
 
@@ -473,16 +481,26 @@ const Contact = () => {
                     rel="noopener noreferrer"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
+                    whileHover={{ y: -10 }}
                     transition={{ delay: i * 0.1 }}
-                    className="p-8 bg-bg-alt border border-border rounded-3xl flex flex-col items-center text-center group hover:border-white/40 transition-all duration-500"
+                    className="p-8 bg-bg-alt border border-border rounded-3xl flex flex-col items-center text-center group hover:border-white/20 transition-all duration-500 relative overflow-hidden"
                   >
-                    <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center mb-6 group-hover:bg-white group-hover:text-black transition-all duration-500">
+                    {/* Hover Gradient Glow */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#5227FF]/5 via-[#FF9FFC]/5 to-[#B19EEF]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    
+                    <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center mb-6 group-hover:bg-gradient-to-br group-hover:from-[#5227FF] group-hover:via-[#FF9FFC] group-hover:to-[#B19EEF] group-hover:text-white transition-all duration-500 relative z-10">
                       <item.icon size={28} />
                     </div>
-                    <p className="text-xs font-bold text-text-muted uppercase tracking-widest mb-2">{item.label}</p>
-                    <p className="font-semibold text-lg">{item.value}</p>
+                    <p className="text-xs font-bold text-text-muted uppercase tracking-widest mb-2 relative z-10 group-hover:text-white transition-colors">{item.label}</p>
+                    <p className="font-semibold text-lg relative z-10">{item.value}</p>
                   </motion.a>
                 ))}
+              </div>
+
+              <div className="mt-20 pt-8 border-t border-white/5 text-center">
+                <p className="text-text-muted text-sm">
+                  © 2026 <GradientText colors={["#5227FF", "#FF9FFC", "#B19EEF"]} animationSpeed={8} showBorder={false} className="inline font-semibold">Ankush Shetty</GradientText>. All rights reserved.
+                </p>
               </div>
             </motion.div>
           )}
