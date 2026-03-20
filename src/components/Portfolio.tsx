@@ -21,6 +21,7 @@ import Aurora from "./Aurora";
 import GradientText from "./GradientText";
 import useEmblaCarousel from 'embla-carousel-react';
 import OrbitImages from './OrbitImages';
+import TextType from './TextType';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -107,18 +108,33 @@ const Hero = () => (
       transition={{ duration: 0.6 }}
       className="container-max relative z-10"
     >
-      <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-6 leading-tight">
-        Building <GradientText
+      <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-6 leading-tight flex flex-wrap justify-center items-center gap-x-4">
+        <TextType 
+          text="Hi, I'm" 
+          typingSpeed={75}
+          showCursor={false}
+          loop={false}
+          className="inline"
+        />
+        <GradientText
           colors={["#5227FF", "#FF9FFC", "#B19EEF"]}
           animationSpeed={8}
           showBorder={false}
+          className="inline"
         >
-          Modern
-        </GradientText> Digital Experiences
+          <TextType 
+            text="Ankush" 
+            typingSpeed={75}
+            initialDelay={1000}
+            showCursor={true}
+            cursorCharacter="_"
+            loop={false}
+            className="inline"
+          />
+        </GradientText>
       </h1>
       <p className="text-lg md:text-xl text-text-muted mb-10 max-w-2xl mx-auto font-medium">
-        Hi, I'm Ankush. An aspiring web developer focused on creating clean, 
-        functional, and user-friendly web applications.
+        An aspiring digital marketer passionate about building automated systems
       </p>
       <div className="flex flex-col sm:flex-row gap-4 justify-center">
         <a 
@@ -175,12 +191,10 @@ const About = () => (
             About Me
           </GradientText>
           <p className="text-lg text-text-muted leading-relaxed mb-6">
-            I am a passionate web developer with a focus on creating clean, intuitive, and responsive user experiences. 
-            I love turning complex problems into simple, beautiful interface designs.
+            I’m a passionate digital marketer focused on building automation systems and data-driven strategies. I enjoy turning complex marketing challenges into simple, effective solutions that drive real growth. With a strong interest in the technical side of marketing, I’m constantly learning and exploring new tools and strategies to improve results.
           </p>
           <p className="text-lg text-text-muted leading-relaxed">
-            My journey in tech is driven by curiosity and a commitment to continuous learning. 
-            I specialize in building modern web applications using the latest technologies.
+            I’m especially eager to deepen my understanding of growth and performance-driven approaches. Outside of work, I enjoy riding bikes and spending time in the gym, staying disciplined and consistent.
           </p>
         </motion.div>
       </div>
@@ -405,6 +419,7 @@ const Contact = () => {
                 <motion.button
                   animate={{ x: noButtonPos.x, y: noButtonPos.y }}
                   onMouseEnter={moveNoButton}
+                  onClick={moveNoButton}
                   className="px-12 py-4 border-2 border-white/20 text-white font-bold rounded-2xl text-xl"
                 >
                   No
