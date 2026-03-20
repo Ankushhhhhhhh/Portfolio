@@ -20,6 +20,7 @@ import { useState, useEffect, useCallback, useRef, FormEvent, useMemo } from "re
 import Aurora from "./Aurora";
 import GradientText from "./GradientText";
 import useEmblaCarousel from 'embla-carousel-react';
+import Autoplay from 'embla-carousel-autoplay';
 import OrbitImages from './OrbitImages';
 import TextType from './TextType';
 
@@ -238,7 +239,10 @@ const Projects = () => {
     }
   ];
 
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: 'center', skipSnaps: false });
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    { loop: true, align: 'center', skipSnaps: false },
+    [Autoplay({ delay: 4000, stopOnInteraction: false, stopOnMouseEnter: true })]
+  );
   const [prevBtnEnabled, setPrevBtnEnabled] = useState(false);
   const [nextBtnEnabled, setNextBtnEnabled] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -275,7 +279,7 @@ const Projects = () => {
           <p className="text-text-muted max-w-2xl mx-auto">A showcase of my recent work and technical projects.</p>
         </div>
 
-        <div className="relative max-w-5xl mx-auto">
+        <div className="relative max-w-6xl mx-auto group/carousel">
           <div className="overflow-hidden" ref={emblaRef}>
             <div className="flex">
               {projects.map((project, index) => (
@@ -284,21 +288,21 @@ const Projects = () => {
                     initial={{ opacity: 0, scale: 0.95 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
-                    className="bg-bg border border-border rounded-[40px] overflow-hidden hover:shadow-2xl hover:shadow-indigo-500/5 transition-all duration-300 flex flex-col md:flex-row h-full min-h-[450px]"
+                    className="bg-bg border border-border rounded-[40px] overflow-hidden hover:shadow-2xl hover:shadow-indigo-500/10 transition-all duration-500 flex flex-col md:flex-row h-full min-h-[450px] group/card"
                   >
                     <div className="md:w-1/2 aspect-video md:aspect-auto overflow-hidden relative">
                       <img 
                         src={project.image} 
                         alt={project.title} 
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                        className="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-700"
                         referrerPolicy="no-referrer"
                       />
-                      <div className="absolute inset-0 bg-transparent group-hover:gradient-bg group-hover:opacity-10 transition-all duration-300"></div>
+                      <div className="absolute inset-0 bg-black/20 group-hover/card:bg-black/0 transition-all duration-500"></div>
                     </div>
-                    <div className="md:w-1/2 p-8 md:p-12 flex flex-col justify-center">
+                    <div className="md:w-1/2 p-8 md:p-12 flex flex-col justify-center relative bg-gradient-to-br from-bg to-bg-alt">
                       <div className="flex gap-2 mb-6 flex-wrap">
                         {project.tags.map(tag => (
-                          <span key={tag} className="text-[10px] font-bold uppercase tracking-wider px-2 py-1 bg-bg-alt border border-border rounded-md">
+                          <span key={tag} className="text-[10px] font-bold uppercase tracking-wider px-3 py-1 bg-white/5 border border-white/10 rounded-full">
                             <GradientText
                               colors={["#5227FF", "#FF9FFC", "#B19EEF"]}
                               animationSpeed={8}
@@ -309,22 +313,24 @@ const Projects = () => {
                           </span>
                         ))}
                       </div>
-                      <h3 className="text-3xl font-bold mb-4 group-hover:gradient-icon transition-all">{project.title}</h3>
-                      <p className="text-text-muted text-lg mb-10 leading-relaxed">{project.description}</p>
+                      <h3 className="text-3xl md:text-4xl font-bold mb-4 group-hover/card:translate-x-2 transition-transform duration-500">{project.title}</h3>
+                      <p className="text-text-muted text-lg mb-10 leading-relaxed group-hover/card:text-text transition-colors duration-500">{project.description}</p>
                       <div className="flex items-center gap-4">
                         <a 
                           href={project.link}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 text-sm font-bold group"
+                          className="inline-flex items-center gap-2 text-sm font-bold group/link"
                         >
                           <GradientText
                             colors={["#5227FF", "#FF9FFC", "#B19EEF"]}
                             animationSpeed={8}
                             showBorder={false}
                           >
-                            {project.isPdf ? "View PDF" : "View Project"} 
-                            <ArrowRight size={18} className="inline ml-2 transition-transform group-hover:translate-x-1" />
+                            <span className="flex items-center">
+                              {project.isPdf ? "View PDF" : "View Project"} 
+                              <ArrowRight size={18} className="ml-2 transition-transform group-hover/link:translate-x-2" />
+                            </span>
                           </GradientText>
                         </a>
                       </div>
@@ -335,31 +341,47 @@ const Projects = () => {
             </div>
           </div>
 
-          {/* Navigation Buttons */}
-          <div className="flex justify-center items-center gap-6 mt-12">
-            <button 
+          {/* Floating Navigation Buttons */}
+          <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 flex justify-between px-2 md:-px-10 pointer-events-none">
+            <motion.button 
+              whileHover={{ scale: 1.1, x: -5 }}
+              whileTap={{ scale: 0.9 }}
               onClick={scrollPrev}
-              className="w-14 h-14 rounded-full border border-border flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 active:scale-95 disabled:opacity-30"
+              className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-bg/40 backdrop-blur-xl border border-white/10 flex items-center justify-center text-white pointer-events-auto opacity-0 group-hover/carousel:opacity-100 transition-opacity duration-300 shadow-2xl disabled:opacity-0"
               disabled={!prevBtnEnabled}
             >
-              <ArrowLeft size={24} />
-            </button>
-            <div className="flex gap-2">
-              {projects.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => emblaApi && emblaApi.scrollTo(index)}
-                  className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${selectedIndex === index ? 'w-8 bg-white' : 'bg-border hover:bg-text-muted'}`}
-                />
-              ))}
-            </div>
-            <button 
+              <ArrowLeft size={28} />
+            </motion.button>
+            <motion.button 
+              whileHover={{ scale: 1.1, x: 5 }}
+              whileTap={{ scale: 0.9 }}
               onClick={scrollNext}
-              className="w-14 h-14 rounded-full border border-border flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 active:scale-95 disabled:opacity-30"
+              className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-bg/40 backdrop-blur-xl border border-white/10 flex items-center justify-center text-white pointer-events-auto opacity-0 group-hover/carousel:opacity-100 transition-opacity duration-300 shadow-2xl disabled:opacity-0"
               disabled={!nextBtnEnabled}
             >
-              <ArrowRight size={24} />
-            </button>
+              <ArrowRight size={28} />
+            </motion.button>
+          </div>
+
+          {/* Minimalist Progress Pagination */}
+          <div className="flex justify-center items-center gap-3 mt-12">
+            {projects.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => emblaApi && emblaApi.scrollTo(index)}
+                className="group relative py-4"
+              >
+                <div className={`h-1 rounded-full transition-all duration-500 ${selectedIndex === index ? 'w-12 bg-white' : 'w-4 bg-white/20 group-hover:bg-white/40'}`} />
+                {selectedIndex === index && (
+                  <motion.div 
+                    layoutId="active-dot"
+                    className="absolute inset-0 flex items-center justify-center"
+                  >
+                    <div className="w-full h-1 bg-gradient-to-r from-[#5227FF] via-[#FF9FFC] to-[#B19EEF] rounded-full blur-[2px]" />
+                  </motion.div>
+                )}
+              </button>
+            ))}
           </div>
         </div>
       </div>
