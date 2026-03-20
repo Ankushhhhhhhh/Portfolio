@@ -354,142 +354,107 @@ const Projects = () => {
 };
 
 const Contact = () => {
-  const [formStatus, setFormStatus] = useState("");
+  const [isOfficial, setIsOfficial] = useState(false);
+  const [noButtonPos, setNoButtonPos] = useState({ x: 0, y: 0 });
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    setFormStatus("Thank you! Your message has been sent.");
-    (e.target as HTMLFormElement).reset();
-    setTimeout(() => setFormStatus(""), 5000);
+  const moveNoButton = () => {
+    if (!containerRef.current) return;
+    const container = containerRef.current.getBoundingClientRect();
+    const btnWidth = 100;
+    const btnHeight = 50;
+    
+    // Random position within container bounds
+    const newX = Math.random() * (container.width - btnWidth) - (container.width / 2 - btnWidth / 2);
+    const newY = Math.random() * (container.height - btnHeight) - (container.height / 2 - btnHeight / 2);
+    
+    setNoButtonPos({ x: newX, y: newY });
   };
 
   return (
-    <section id="contact" className="section-padding bg-bg">
-      <div className="container-max">
-        <div className="grid lg:grid-cols-2 gap-16">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-          >
-            <GradientText
-              colors={["#5227FF", "#FF9FFC", "#B19EEF"]}
-              animationSpeed={8}
-              showBorder={false}
-              className="text-3xl md:text-4xl font-bold mb-6"
+    <section id="contact" className="py-10 md:py-20 bg-bg min-h-[600px] flex items-center justify-center relative overflow-hidden">
+      <StarField />
+      <div className="container-max relative z-10" ref={containerRef}>
+        <AnimatePresence mode="wait">
+          {!isOfficial ? (
+            <motion.div
+              key="question"
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.1 }}
+              className="text-center space-y-12"
             >
-              Get in Touch
-            </GradientText>
-            <p className="text-lg text-text-muted mb-10">
-              Have a project in mind or just want to say hi? I'm always open to discussing new opportunities and creative ideas.
-            </p>
-            <div className="space-y-6">
-              <div className="flex items-center gap-5 group">
-                <div className="w-12 h-12 rounded-2xl bg-bg-alt border border-border flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-300">
-                  <Mail size={20} className="group-hover:text-black" />
-                </div>
-                <div>
-                  <p className="text-xs font-bold text-text-muted uppercase tracking-widest">Email Me</p>
-                  <p className="font-semibold">ankushshetty0@gmail.com</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-5 group">
-                <div className="w-12 h-12 rounded-2xl bg-bg-alt border border-border flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-300">
-                  <Phone size={20} className="group-hover:text-black" />
-                </div>
-                <div>
-                  <p className="text-xs font-bold text-text-muted uppercase tracking-widest">Call Me</p>
-                  <p className="font-semibold">+91 9004950666</p>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-          
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-          >
-            <form onSubmit={handleSubmit} className="bg-bg-alt p-8 md:p-10 rounded-3xl border border-border space-y-6 shadow-sm">
-              <div className="grid md:grid-cols-2 gap-6">
-                <div className="space-y-2">
-                  <label className="text-xs font-bold text-text-muted uppercase tracking-widest ml-1">Name</label>
-                  <input 
-                    type="text" 
-                    required 
-                    className="w-full px-4 py-3 rounded-xl border border-border bg-bg focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-sm"
-                    placeholder="John Doe"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <label className="text-xs font-bold text-text-muted uppercase tracking-widest ml-1">Email</label>
-                  <input 
-                    type="email" 
-                    required 
-                    className="w-full px-4 py-3 rounded-xl border border-border bg-bg focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all text-sm"
-                    placeholder="john@example.com"
-                  />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <label className="text-xs font-bold text-text-muted uppercase tracking-widest ml-1">Message</label>
-                <textarea 
-                  required 
-                  rows={4}
-                  className="w-full px-4 py-3 rounded-xl border border-border bg-bg focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all resize-none text-sm"
-                  placeholder="Tell me about your project..."
-                ></textarea>
-              </div>
-              <button 
-                type="submit"
-                className="w-full bg-white text-black py-4 rounded-xl font-bold uppercase tracking-widest text-xs transition-all transform active:scale-[0.98] shadow-lg shadow-white/10"
-              >
-                Send Message
-              </button>
-              {formStatus && (
-                <motion.p 
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="text-sm text-green-600 font-semibold text-center mt-4"
+              <h2 className="text-5xl md:text-7xl font-bold tracking-tighter">
+                <GradientText
+                  colors={["#5227FF", "#FF9FFC", "#B19EEF"]}
+                  animationSpeed={8}
+                  showBorder={false}
                 >
-                  {formStatus}
-                </motion.p>
-              )}
-            </form>
-          </motion.div>
-        </div>
+                  Is it official?
+                </GradientText>
+              </h2>
+              
+              <div className="flex flex-col md:flex-row items-center justify-center gap-8 h-32">
+                <button
+                  onClick={() => setIsOfficial(true)}
+                  className="px-12 py-4 bg-white text-black font-bold rounded-2xl text-xl hover:scale-110 transition-transform shadow-[0_0_20px_rgba(255,255,255,0.3)]"
+                >
+                  Yes
+                </button>
+                
+                <motion.button
+                  animate={{ x: noButtonPos.x, y: noButtonPos.y }}
+                  onMouseEnter={moveNoButton}
+                  className="px-12 py-4 border-2 border-white/20 text-white font-bold rounded-2xl text-xl"
+                >
+                  No
+                </motion.button>
+              </div>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="contact-info"
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="max-w-4xl mx-auto"
+            >
+              <div className="text-center mb-16">
+                <h2 className="text-4xl md:text-6xl font-bold mb-6">Let's Connect</h2>
+                <p className="text-text-muted text-lg">You made the right choice. Here's how to reach me.</p>
+              </div>
+
+              <div className="grid md:grid-cols-3 gap-8">
+                {[
+                  { icon: Mail, label: "Email", value: "ankushshetty0@gmail.com", href: "mailto:ankushshetty0@gmail.com" },
+                  { icon: Phone, label: "Phone", value: "+91 9004950666", href: "tel:+919004950666" },
+                  { icon: Linkedin, label: "LinkedIn", value: "Ankush Shetty", href: "https://www.linkedin.com/in/ankush-shetty-501007299" }
+                ].map((item, i) => (
+                  <motion.a
+                    key={item.label}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.1 }}
+                    className="p-8 bg-bg-alt border border-border rounded-3xl flex flex-col items-center text-center group hover:border-white/40 transition-all duration-500"
+                  >
+                    <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center mb-6 group-hover:bg-white group-hover:text-black transition-all duration-500">
+                      <item.icon size={28} />
+                    </div>
+                    <p className="text-xs font-bold text-text-muted uppercase tracking-widest mb-2">{item.label}</p>
+                    <p className="font-semibold text-lg">{item.value}</p>
+                  </motion.a>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );
 };
 
-const Footer = () => (
-  <footer className="py-12 px-6 border-t border-border bg-bg">
-    <div className="container-max flex flex-col md:flex-row justify-between items-center gap-8">
-      <div className="text-center md:text-left">
-        <GradientText
-          colors={["#5227FF", "#FF9FFC", "#B19EEF"]}
-          animationSpeed={8}
-          showBorder={false}
-          className="text-lg font-bold tracking-tighter mb-2"
-        >
-          Ankush Shetty
-        </GradientText>
-        <p className="text-sm text-text-muted">© 2026. All rights reserved.</p>
-      </div>
-      <div className="flex gap-6">
-        <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-xl bg-bg-alt flex items-center justify-center text-text-muted hover:bg-white hover:text-black transition-all duration-300">
-          <Github size={20} />
-        </a>
-        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-xl bg-bg-alt flex items-center justify-center text-text-muted hover:bg-white hover:text-black transition-all duration-300">
-          <Linkedin size={20} />
-        </a>
-      </div>
-    </div>
-  </footer>
-);
 
 
 const StarField = () => {
@@ -547,7 +512,7 @@ const Certificates = () => {
   ];
 
   return (
-    <section id="certificates" className="section-padding bg-bg overflow-hidden relative">
+    <section id="certificates" className="pt-20 md:pt-32 pb-10 md:pb-20 bg-bg overflow-hidden relative">
       <StarField />
       <div className="container-max relative z-10">
         <div className="text-center mb-8">
@@ -566,11 +531,11 @@ const Certificates = () => {
           <OrbitImages
             images={images}
             shape="ellipse"
-            radiusX={window.innerWidth < 768 ? 200 : 500}
-            radiusY={window.innerWidth < 768 ? 50 : 120}
+            radiusX={window.innerWidth < 768 ? 320 : 500}
+            radiusY={window.innerWidth < 768 ? 80 : 120}
             rotation={-8}
             duration={30}
-            itemSize={window.innerWidth < 768 ? 60 : 100}
+            itemSize={window.innerWidth < 768 ? 80 : 100}
             responsive={true}
             radius={160}
             direction="normal"
@@ -620,4 +585,4 @@ const Certificates = () => {
   );
 };
 
-export { Navbar, Hero, About, Projects, Certificates, Contact, Footer };
+export { Navbar, Hero, About, Projects, Certificates, Contact };

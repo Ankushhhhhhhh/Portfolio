@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { Navbar, Hero, About, Projects, Certificates, Contact, Footer } from "./components/Portfolio";
+import { Navbar, Hero, About, Projects, Certificates, Contact } from "./components/Portfolio";
 import BubbleMenu from "./components/BubbleMenu";
 
 const menuItems = [
@@ -64,7 +64,6 @@ export default function App() {
         <Certificates />
         <Contact />
       </main>
-      <Footer />
     </div>
   );
 }
