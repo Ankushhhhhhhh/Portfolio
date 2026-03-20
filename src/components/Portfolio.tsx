@@ -16,7 +16,7 @@ import {
   Download,
   Globe
 } from "lucide-react";
-import { useState, useEffect, useCallback, useRef, FormEvent } from "react";
+import { useState, useEffect, useCallback, useRef, FormEvent, useMemo } from "react";
 import Aurora from "./Aurora";
 import GradientText from "./GradientText";
 import useEmblaCarousel from 'embla-carousel-react';
@@ -492,6 +492,47 @@ const Footer = () => (
 );
 
 
+const StarField = () => {
+  const stars = useMemo(() => Array.from({ length: 80 }).map((_, i) => ({
+    id: i,
+    top: `${Math.random() * 100}%`,
+    left: `${Math.random() * 100}%`,
+    size: Math.random() * 2 + 0.5,
+    opacity: Math.random() * 0.6 + 0.2,
+    duration: Math.random() * 3 + 2,
+    delay: Math.random() * 5,
+  })), []);
+
+  return (
+    <div className="absolute inset-0 pointer-events-none overflow-hidden">
+      {stars.map((star) => (
+        <motion.div
+          key={star.id}
+          className="absolute bg-white rounded-full"
+          style={{
+            top: star.top,
+            left: star.left,
+            width: star.size,
+            height: star.size,
+            opacity: star.opacity,
+            boxShadow: star.size > 1.5 ? '0 0 4px rgba(255,255,255,0.8)' : 'none',
+          }}
+          animate={{
+            opacity: [star.opacity, 0.1, star.opacity],
+            scale: [1, 1.2, 1],
+          }}
+          transition={{
+            duration: star.duration,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: star.delay,
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
 const Certificates = () => {
   const images = [
     "https://picsum.photos/300/300?grayscale&random=1",
@@ -503,8 +544,9 @@ const Certificates = () => {
   ];
 
   return (
-    <section id="certificates" className="section-padding bg-bg overflow-hidden">
-      <div className="container-max">
+    <section id="certificates" className="section-padding bg-bg overflow-hidden relative">
+      <StarField />
+      <div className="container-max relative z-10">
         <div className="text-center mb-8">
           <GradientText
             colors={["#5227FF", "#FF9FFC", "#B19EEF"]}
@@ -531,6 +573,8 @@ const Certificates = () => {
             direction="normal"
             fill
             showPath
+            pathColor="rgba(255, 255, 255, 0.3)"
+            pathWidth={2}
             paused={false}
             className="w-full h-full"
           />

@@ -261,7 +261,13 @@ export default function OrbitImages({
               viewBox={`0 0 ${baseWidth} ${baseWidth}`}
               className="orbit-path-svg"
             >
-              <path d={path} fill="none" stroke={pathColor} strokeWidth={pathWidth / scale} />
+              <path 
+                d={path} 
+                fill="none" 
+                stroke={pathColor} 
+                strokeWidth={pathWidth / scale} 
+                style={{ filter: 'drop-shadow(0 0 2px rgba(255,255,255,0.3))' }}
+              />
             </svg>
           )}
 
