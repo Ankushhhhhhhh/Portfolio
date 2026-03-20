@@ -563,8 +563,8 @@ const Certificates = () => {
           <OrbitImages
             images={images}
             shape="ellipse"
-            radiusX={window.innerWidth < 768 ? 160 : 340}
-            radiusY={window.innerWidth < 768 ? 40 : 80}
+            radiusX={window.innerWidth < 768 ? 200 : 500}
+            radiusY={window.innerWidth < 768 ? 50 : 120}
             rotation={-8}
             duration={30}
             itemSize={window.innerWidth < 768 ? 60 : 100}
