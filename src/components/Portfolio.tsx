@@ -534,13 +534,16 @@ const StarField = () => {
 };
 
 const Certificates = () => {
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
   const images = [
-    "https://picsum.photos/300/300?grayscale&random=1",
-    "https://picsum.photos/300/300?grayscale&random=2",
-    "https://picsum.photos/300/300?grayscale&random=3",
-    "https://picsum.photos/300/300?grayscale&random=4",
-    "https://picsum.photos/300/300?grayscale&random=5",
-    "https://picsum.photos/300/300?grayscale&random=6",
+    "https://i.postimg.cc/gr94tjgJ/Beach-Cleaning-Certificate.jpg",
+    "https://i.postimg.cc/tggfx1f2/Digital-Advertising-Certificate.png",
+    "https://i.postimg.cc/cJjDtFfR/Google-Analytics-Certificate.png",
+    "https://i.postimg.cc/X73s5GBF/Photography-Certificate.png",
+    "https://i.postimg.cc/8CF4GLxF/Prompt-engineering-certificate.png",
+    "https://i.postimg.cc/0yjdGpkK/SEO-Certificate.png",
+    "https://i.postimg.cc/jS16MLCS/Swayam-Digital-Marketing-Certificate.jpg",
   ];
 
   return (
@@ -575,11 +578,44 @@ const Certificates = () => {
             showPath
             pathColor="rgba(255, 255, 255, 0.3)"
             pathWidth={2}
-            paused={false}
+            paused={!!selectedImage}
             className="w-full h-full"
+            onItemClick={(index) => setSelectedImage(images[index])}
           />
         </div>
       </div>
+
+      <AnimatePresence>
+        {selectedImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 md:p-10"
+            onClick={() => setSelectedImage(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.8, opacity: 0 }}
+              className="relative max-w-5xl max-h-full"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                className="absolute -top-12 right-0 md:-right-12 text-white hover:text-primary transition-colors p-2"
+                onClick={() => setSelectedImage(null)}
+              >
+                <X size={32} />
+              </button>
+              <img
+                src={selectedImage}
+                alt="Certificate"
+                className="w-full h-auto max-h-[80vh] object-contain rounded-lg shadow-2xl"
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };

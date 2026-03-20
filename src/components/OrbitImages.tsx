@@ -77,10 +77,11 @@ interface OrbitItemProps {
   rotation: number;
   progress: MotionValue<number>;
   fill: boolean;
+  onClick?: (index: number) => void;
   key?: React.Key;
 }
 
-function OrbitItem({ item, index, totalItems, path, itemSize, rotation, progress, fill }: OrbitItemProps) {
+function OrbitItem({ item, index, totalItems, path, itemSize, rotation, progress, fill, onClick }: OrbitItemProps) {
   const itemOffset = fill ? (index / totalItems) * 100 : 0;
 
   const offsetDistance = useTransform(progress, (p: number) => {
@@ -98,7 +99,10 @@ function OrbitItem({ item, index, totalItems, path, itemSize, rotation, progress
         offsetRotate: '0deg',
         offsetAnchor: 'center center',
         offsetDistance,
+        cursor: onClick ? 'pointer' : 'default',
       }}
+      onClick={() => onClick?.(index)}
+      whileHover={onClick ? { scale: 1.1, zIndex: 10 } : {}}
     >
       <div style={{ transform: `rotate(${-rotation}deg)` }}>{item}</div>
     </motion.div>
@@ -131,6 +135,7 @@ interface OrbitImagesProps {
   paused?: boolean;
   centerContent?: React.ReactNode;
   responsive?: boolean;
+  onItemClick?: (index: number) => void;
 }
 
 export default function OrbitImages({
@@ -159,6 +164,7 @@ export default function OrbitImages({
   paused = false,
   centerContent,
   responsive = false,
+  onItemClick,
 }: OrbitImagesProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
@@ -282,6 +288,7 @@ export default function OrbitImages({
               rotation={rotation}
               progress={progress}
               fill={fill}
+              onClick={onItemClick}
             />
           ))}
         </div>
